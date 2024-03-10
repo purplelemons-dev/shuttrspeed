@@ -1,96 +1,77 @@
-<script lang="ts">
+<script>
 	import { SignedIn, SignedOut } from 'sveltefire';
-	import { signInWithEmailAndPassword, type Auth } from 'firebase/auth';
 
-	const handleDropBtn = async (auth: Auth, event: SubmitEvent) => {
-		const form = event.target as HTMLFormElement;
-		const email = form.email.value;
-		const password = form.password.value;
-		try {
-			await signInWithEmailAndPassword(auth, email, password);
-		} catch (error) {
-			console.error(error);
-		}
-	};
+	let isDropdownOpen = false;
+
+	function toggleDropdown() {
+		isDropdownOpen = !isDropdownOpen;
+	}
 </script>
 
-<SignedIn let:auth let:user let:signOut>
-	<!-- open a dropdown menu for account settings and logout button -->>
-</SignedIn>
-
-<SignedOut let:auth>
-	<!-- open a dropdown menu for signin and signup buttons -->
-	<div class="dropdown">
-		<button class="dropbtn">Sign In</button>
-		<div class="dropdown-content">
-			<form on:submit|preventDefault={(event) => handleDropBtn(auth, event)}>
-				<label for="email">Email</label>
-				<input type="email" id="email" name="email" required />
-				<label for="password">Password</label>
-				<input type="password" id="password" name="password" required />
-				<button type="submit">Sign In</button>
-			</form>
+<div
+	class="profile-icon"
+	on:click={toggleDropdown}
+	on:keypress={toggleDropdown}
+	role="button"
+	tabindex="0"
+>
+	<SignedIn let:user><img src={user.photoURL} alt="Profile Icon" /></SignedIn>
+	<SignedOut><img src="profile-icon.png" alt="Profile Icon" /></SignedOut>
+	{#if isDropdownOpen}
+		<div class="dropdown">
+			<SignedIn let:auth let:signOut let:user>
+				<button on:click={signOut}>Sign Out</button>
+				<button>Account Settings</button>
+				<button>Light/Dark Switch</button>
+				<button>Preferences</button>
+			</SignedIn>
+			<SignedOut let:auth>
+				<button>Sign In or Register</button>
+			</SignedOut>
 		</div>
-	</div>
-</SignedOut>
+	{/if}
+</div>
 
 <style>
-	/* Dropdown Button */
-	.dropbtn {
-		background-color: #3498db;
-		color: white;
-		padding: 16px;
-		font-size: 16px;
-		border: none;
+	.profile-icon {
+		position: relative;
 		cursor: pointer;
 	}
 
-	/* Dropdown button on hover & focus */
-	.dropbtn:hover,
-	.dropbtn:focus {
-		background-color: #2980b9;
+	.profile-icon img {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
 	}
 
-	/* The container <div> - needed to position the dropdown content */
 	.dropdown {
-		position: relative;
-		display: inline-block;
-	}
-
-	/* Dropdown Content (Hidden by Default) */
-	.dropdown-content {
-		display: none;
 		position: absolute;
-		background-color: #f9f9f9;
-		min-width: 160px;
-		box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		top: 100%;
+		left: 0;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		padding: 8px;
+		min-width: 150px;
 		z-index: 1;
 	}
 
-	/* Links inside the dropdown */
-	.dropdown-content form {
-		display: flex;
-		flex-direction: column;
-		padding: 10px;
+	.dropdown button {
+		padding: 8px 12px;
+		border: none;
+		background-color: transparent;
+		color: #333;
+		text-align: left;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
 	}
 
-	/* Change color of dropdown links on hover */
-	.dropdown-content form button {
-		background-color: #f9f9f9;
-		color: black;
-		padding: 12px 16px;
-		text-decoration: none;
-		display: block;
+	.dropdown button:hover {
+		background-color: #f0f0f0;
 	}
 
-	/* Show the dropdown menu on hover */
-	.dropdown:hover .dropdown-content {
-		display: block;
+	.dropdown button:focus {
+		outline: none;
+		box-shadow: 0 0 0 2px #007bff;
 	}
-
-	/* Change the background color of the dropdown button when the dropdown content is shown */
-	.dropdown:hover .dropbtn {
-		background-color: #2980b9;
-	}
-	
 </style>
