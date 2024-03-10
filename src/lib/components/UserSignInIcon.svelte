@@ -1,10 +1,15 @@
 <script>
 	import { SignedIn, SignedOut } from 'sveltefire';
+	import SignInPopup from './SignInPopup.svelte';
 
+	let isPopupOpen = false;
 	let isDropdownOpen = false;
 
 	function toggleDropdown() {
 		isDropdownOpen = !isDropdownOpen;
+	}
+	function togglePopup() {
+		isPopupOpen = !isPopupOpen;
 	}
 </script>
 
@@ -26,11 +31,15 @@
 				<button>Preferences</button>
 			</SignedIn>
 			<SignedOut let:auth>
-				<button>Sign In or Register</button>
+				<button on:click={togglePopup}>Sign In or Register</button>
 			</SignedOut>
 		</div>
 	{/if}
 </div>
+
+{#if isPopupOpen}
+	<SignInPopup bind:isOpen={isPopupOpen} />
+{/if}
 
 <style>
 	.profile-icon {
