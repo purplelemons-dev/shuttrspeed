@@ -5,7 +5,7 @@
 
 	let map: google.maps.Map<HTMLDivElement>;
 	let userLocation: { lat: number; lng: number };
-	let autoLoad = false;
+	let autoLoad = true;
 </script>
 
 <div class="app-container">
