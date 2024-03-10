@@ -1,5 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 
+import type { GeoPoint } from "firebase/firestore";
+
 export const firebaseConfig = {
     apiKey: 'AIzaSyC5OGGA4vhHWEztSzYykBvafcWnrzqSNdY',
     authDomain: 'shuttrspeed.firebaseapp.com',
@@ -16,4 +18,5 @@ export interface User {
     name: string;
     displayName: string;
     photoURL: string;
+    location: GeoPoint;
 }
