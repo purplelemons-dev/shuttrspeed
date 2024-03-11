@@ -1,6 +1,9 @@
-<script>
+<script lang="ts">
 	import { SignedIn, SignedOut } from 'sveltefire';
 	import SignInPopup from './SignInPopup.svelte';
+	import type { UserLocation } from '$lib';
+
+	export let userLocation: UserLocation;
 
 	let isPopupOpen = false;
 	let isDropdownOpen = false;
@@ -38,7 +41,7 @@
 </div>
 
 {#if isPopupOpen}
-	<SignInPopup bind:isOpen={isPopupOpen} />
+	<SignInPopup bind:isOpen={isPopupOpen} {userLocation} />
 {/if}
 
 <style>

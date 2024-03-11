@@ -20,3 +20,8 @@ export interface User {
     photoURL: string;
     location: GeoPoint;
 }
+
+export interface UserLocation {
+    lat: number;
+    lng: number;
+}
