@@ -14,7 +14,7 @@
 		await setDoc(doc(firestore, 'users', user.uid), {
 			uid: user.uid,
 			email: user.email,
-			name: user.displayName,
+			displayName: user.displayName,
 			photoURL: user.photoURL,
 			location: new GeoPoint(userLocation.lat, userLocation.lng)
 		});
