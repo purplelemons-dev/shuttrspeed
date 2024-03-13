@@ -3,16 +3,11 @@
 	import MapBackground from '$lib/components/MapBackground.svelte';
 	import UserList from '$lib/components/UserList.svelte';
 	import UserSignInIcon from '$lib/components/UserSignInIcon.svelte';
-	import { onMount } from 'svelte';
 
 	let map: google.maps.Map<HTMLDivElement>;
 	let userLocation: UserLocation;
 	let autoLoad = true;
 	let isDarkMode: boolean;
-
-	//onMount(() => {
-	//isDarkMode = localStorage.getItem('isDarkMode') === 'true';
-	//});
 </script>
 
 <div class="app-container">

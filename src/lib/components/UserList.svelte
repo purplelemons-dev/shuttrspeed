@@ -18,7 +18,7 @@
 <SignedIn>
 	<ul>
 		{#each $users as userItem (distanceCalc(lat, lng, userItem.location.latitude, userItem.location.longitude))}
-			<li>{userItem.displayName}</li>
+			<li>{userItem.name}</li>
 		{/each}
 	</ul>
 </SignedIn>
