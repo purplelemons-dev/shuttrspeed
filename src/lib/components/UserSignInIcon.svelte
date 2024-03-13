@@ -3,12 +3,11 @@
 	import SignInPopup from './SignInPopup.svelte';
 	import type { UserLocation } from '$lib';
 	import { onMount } from 'svelte';
-
 	export let userLocation: UserLocation;
 
 	let isPopupOpen = false;
 	let isDropdownOpen = false;
-	let isDarkMode = false;
+	export let isDarkMode: boolean;
 
 	const toggleDropdown = () => {
 		isDropdownOpen = !isDropdownOpen;
@@ -17,9 +16,16 @@
 		isPopupOpen = !isPopupOpen;
 	};
 
+	onMount(() => {
+		isDarkMode = localStorage.getItem('isDarkMode') === 'true';
+		if (isDarkMode) document.documentElement.classList.add('dark-mode');
+		else document.documentElement.classList.remove('dark-mode');
+	});
+
 	const toggleDarkMode = () => {
 		isDarkMode = !isDarkMode;
 		document.documentElement.classList.toggle('dark-mode', isDarkMode);
+		localStorage.setItem('isDarkMode', String(isDarkMode));
 	};
 </script>
 
