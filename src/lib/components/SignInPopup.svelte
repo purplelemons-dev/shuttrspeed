@@ -44,6 +44,7 @@
 								isOpen = false;
 								getDoc(doc(firestore, 'users', user.user.uid)).then(async (doc) => {
 									if (doc.exists()) return;
+
 									await addUserDoc(user.user);
 								});
 							}}
