@@ -2,18 +2,25 @@
 	import { SignedIn, SignedOut } from 'sveltefire';
 	import SignInPopup from './SignInPopup.svelte';
 	import type { UserLocation } from '$lib';
+	import { onMount } from 'svelte';
 
 	export let userLocation: UserLocation;
 
 	let isPopupOpen = false;
 	let isDropdownOpen = false;
+	let isDarkMode = false;
 
-	function toggleDropdown() {
+	const toggleDropdown = () => {
 		isDropdownOpen = !isDropdownOpen;
-	}
-	function togglePopup() {
+	};
+	const togglePopup = () => {
 		isPopupOpen = !isPopupOpen;
-	}
+	};
+
+	const toggleDarkMode = () => {
+		isDarkMode = !isDarkMode;
+		document.documentElement.classList.toggle('dark-mode', isDarkMode);
+	};
 </script>
 
 <div
@@ -25,15 +32,16 @@
 >
 	<SignedIn let:user><img src={user.photoURL} alt="Profile Icon" /></SignedIn>
 	<SignedOut><img src="profile-icon.png" alt="Profile Icon" /></SignedOut>
+
 	{#if isDropdownOpen}
 		<div class="dropdown">
 			<SignedIn let:auth let:signOut let:user>
 				<button on:click={signOut}>Sign Out</button>
 				<button>Account Settings</button>
-				<button>Light/Dark Switch</button>
+				<button on:click={toggleDarkMode}>Light/Dark Switch</button>
 				<button>Preferences</button>
 			</SignedIn>
-			<SignedOut let:auth>
+			<SignedOut>
 				<button on:click={togglePopup}>Sign In or Register</button>
 			</SignedOut>
 		</div>
@@ -48,6 +56,7 @@
 	.profile-icon {
 		position: relative;
 		cursor: pointer;
+		display: inline-block;
 	}
 
 	.profile-icon img {

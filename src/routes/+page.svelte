@@ -13,6 +13,7 @@
 	<div class="sidebar">
 		<!-- user signin icon -->
 		<UserSignInIcon {userLocation} />
+
 		<h1>ShuttrSpeed</h1>
 		<p>Click the buttons for a demo.</p>
 		<button
@@ -36,14 +37,25 @@
 </div>
 
 <style>
-	.app-container {
-		display: flex;
-		height: 100vh;
-	}
-
 	.sidebar {
 		width: 600px;
 		padding: 20px;
-		background-color: #f0f0f0;
+		background-color: var(--bg-color);
+		color: var(--text-color);
+	}
+	.app-container {
+		display: flex;
+		height: 100vh;
+		background-color: var(--bg-color);
+		color: var(--text-color);
+	}
+	:root {
+		--bg-color: white;
+		--text-color: black;
+	}
+
+	:global(.dark-mode) {
+		--bg-color: black;
+		--text-color: white;
 	}
 </style>
