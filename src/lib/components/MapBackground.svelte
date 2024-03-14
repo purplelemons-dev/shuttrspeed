@@ -29,6 +29,7 @@
 		});
 	});
 
+	// Reactively "listen" for dark mode
 	$: if (map) {
 		map.setOptions({ styles: isDarkMode ? darkModeStyles : lightModeStyles });
 	}

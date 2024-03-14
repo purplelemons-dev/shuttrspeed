@@ -55,7 +55,7 @@
 </div>
 
 {#if isPopupOpen}
-	<SignInPopup bind:isOpen={isPopupOpen} {userLocation} />
+	<SignInPopup bind:isOpen={isPopupOpen} bind:userLocation />
 {/if}
 
 <style>

@@ -1,4 +1,7 @@
 
+/**
+ * Calculates the distance (in km) between two points on the earth
+ */
 export const distanceCalc = (lat1: number, lng1: number, lat2: number, lng2: number) => {
 
     const R = 6371; // Radius of the earth in km
@@ -12,6 +15,9 @@ export const distanceCalc = (lat1: number, lng1: number, lat2: number, lng2: num
             (1 - Math.cos(dLon))) /
         2;
 
-    return R * 2 * Math.asin(Math.sqrt(a));
+    const kmDistance = R * 2 * Math.asin(Math.sqrt(a));
+    const miDistance = kmDistance * 0.621371;
+
+    return miDistance;
 };
 

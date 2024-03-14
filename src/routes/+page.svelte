@@ -13,9 +13,10 @@
 <div class="app-container">
 	<div class="sidebar">
 		<!-- user signin icon -->
-		<UserSignInIcon {userLocation} bind:isDarkMode />
+		<UserSignInIcon bind:userLocation bind:isDarkMode />
 
 		<h1>ShuttrSpeed</h1>
+		<!--
 		<p>Click the buttons for a demo.</p>
 		<button
 			on:click={() => {
@@ -31,8 +32,9 @@
 		>
 			home
 		</button>
+		-->
 
-		<UserList />
+		<UserList bind:userLocation />
 	</div>
 	<MapBackground bind:map bind:userLocation bind:autoLoad bind:isDarkMode />
 </div>

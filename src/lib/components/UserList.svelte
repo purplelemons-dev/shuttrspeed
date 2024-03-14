@@ -2,14 +2,14 @@
 	import type { User } from '$lib';
 	import { distanceCalc } from '$lib/utils';
 	import { firestore, auth } from '$lib/firebase';
-	import { SignedIn, collectionStore, userStore, docStore } from 'sveltefire';
+	import { SignedIn, collectionStore, userStore } from 'sveltefire';
+	import type { UserLocation } from '$lib';
+
+	export let userLocation: UserLocation;
+	$: lat = userLocation?.lat;
+	$: lng = userLocation?.lng;
 
 	const user = userStore(auth);
-	const userLocation = docStore<User>(firestore, `users/${$user?.uid}`);
-
-	let lat = $userLocation?.location.latitude || 0;
-	let lng = $userLocation?.location.longitude || 0;
-
 	const users = collectionStore<User>(firestore, 'users');
 </script>
 
@@ -18,7 +18,12 @@
 <SignedIn>
 	<ul>
 		{#each $users as userItem (distanceCalc(lat, lng, userItem.location.latitude, userItem.location.longitude))}
-			<li>{userItem.name}</li>
+			{#if userItem.uid !== $user?.uid}
+				<li>
+					<h2>{userItem.name}</h2>
+					{(distanceCalc(lat, lng, userItem.location.latitude, userItem.location.longitude)).toFixed(1)} miles from you.
+				</li>
+			{/if}
 		{/each}
 	</ul>
 </SignedIn>
