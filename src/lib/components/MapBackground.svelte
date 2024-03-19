@@ -37,9 +37,8 @@
 
 <div bind:this={mapContainer} class="map-container" style="background-color: var(--bg-color)">
 	<div class="img-container">
-		Map is Loading...
-		&nbsp;
-		<img src="loading.gif">
+		Map is Loading... &nbsp;
+		<img src="loading.gif" />
 	</div>
 </div>
 
@@ -61,6 +60,4 @@
 		left: 45%;
 		vertical-align: auto;
 	}
-
-
 </style>

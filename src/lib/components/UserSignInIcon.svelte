@@ -2,7 +2,9 @@
 	import { SignedIn, SignedOut } from 'sveltefire';
 	import SignInPopup from './SignInPopup.svelte';
 	import type { UserLocation } from '$lib';
+	import { auth } from '$lib/firebase';
 	import { onMount } from 'svelte';
+	import { signOut } from 'firebase/auth';
 	export let userLocation: UserLocation;
 
 	let isPopupOpen = false;
@@ -25,7 +27,15 @@
 	const toggleDarkMode = () => {
 		isDarkMode = !isDarkMode;
 		document.documentElement.classList.toggle('dark-mode', isDarkMode);
+		//document.body.classList.toggle('dark-mode', isDarkMode);
 		localStorage.setItem('isDarkMode', String(isDarkMode));
+	};
+
+	const customSignOut = async () => {
+		isDarkMode = false;
+		document.documentElement.classList.remove('dark-mode');
+		localStorage.setItem('isDarkMode', String(isDarkMode));
+		await signOut(auth);
 	};
 </script>
 
@@ -41,8 +51,8 @@
 
 	{#if isDropdownOpen}
 		<div class="dropdown">
-			<SignedIn let:auth let:signOut let:user>
-				<button on:click={signOut}>Sign Out</button>
+			<SignedIn>
+				<button on:click={customSignOut}>Sign Out</button>
 				<button>Account Settings</button>
 				<button on:click={toggleDarkMode}>Light/Dark Switch</button>
 				<button>Preferences</button>
