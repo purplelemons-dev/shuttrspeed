@@ -8,6 +8,11 @@
 	export let isOpen = false;
 	export let userLocation: UserLocation;
 
+	// slightly randomize location (+/- approx half mile) for privacy
+	const randomLoc = () => {
+		return (Math.random() - 0.5) / 64;
+	};
+
 	const provider = new GoogleAuthProvider();
 	const addUserDoc = async (user: User) => {
 		// TODO: ensure user is not already in the database
@@ -16,7 +21,7 @@
 			email: user.email,
 			name: user.displayName,
 			photoURL: user.photoURL,
-			location: new GeoPoint(userLocation.lat, userLocation.lng)
+			location: new GeoPoint(userLocation.lat + randomLoc(), userLocation.lng + randomLoc())
 		});
 	};
 
@@ -44,7 +49,6 @@
 								isOpen = false;
 								getDoc(doc(firestore, 'users', user.user.uid)).then(async (doc) => {
 									if (doc.exists()) return;
-
 									await addUserDoc(user.user);
 								});
 							}}
