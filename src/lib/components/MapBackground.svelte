@@ -35,11 +35,32 @@
 	}
 </script>
 
-<div bind:this={mapContainer} class="map-container"></div>
+<div bind:this={mapContainer} class="map-container" style="background-color: var(--bg-color)">
+	<div class="img-container">
+		Map is Loading...
+		&nbsp;
+		<img src="loading.gif">
+	</div>
+</div>
 
 <style>
-	.map-container {
+	div.map-container {
 		width: 100%;
 		height: 100%;
+		display: flex;
 	}
+
+	div img {
+		width: 10%;
+		height: 20%;
+	}
+
+	.img-container {
+		position: absolute;
+		top: 40%;
+		left: 45%;
+		vertical-align: auto;
+	}
+
+
 </style>
