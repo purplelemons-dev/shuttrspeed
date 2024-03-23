@@ -12,12 +12,18 @@ export const firebaseConfig = {
     measurementId: 'G-8C8JKVRVR3'
 };
 
+enum AccountType {
+    Photographer = "photographer",
+    Client = "client"
+}
+
 export interface User {
     uid: string;
     email: string;
     name: string;
     photoURL: string;
     location: GeoPoint;
+    accountType: AccountType;
 }
 
 export interface UserLocation {

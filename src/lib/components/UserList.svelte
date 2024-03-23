@@ -18,10 +18,12 @@
 <SignedIn>
 	<ul>
 		{#each $users as userItem (distanceCalc(lat, lng, userItem.location.latitude, userItem.location.longitude))}
-			{#if userItem.uid !== $user?.uid}
+			{#if userItem.uid !== $user?.uid && userItem.accountType === 'photographer'}
 				<li>
 					<h2>{userItem.name}</h2>
-					{(distanceCalc(lat, lng, userItem.location.latitude, userItem.location.longitude)).toFixed(1)} miles from you.
+					{distanceCalc(lat, lng, userItem.location.latitude, userItem.location.longitude).toFixed(
+						1
+					)} miles from you.
 				</li>
 			{/if}
 		{/each}

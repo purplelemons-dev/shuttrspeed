@@ -5,6 +5,8 @@
 	import { setDoc, GeoPoint, doc, getDoc } from 'firebase/firestore';
 	import { SignedOut } from 'sveltefire';
 
+	const provider = new GoogleAuthProvider();
+
 	export let isOpen = false;
 	export let userLocation: UserLocation;
 
@@ -12,8 +14,6 @@
 	const randomLoc = () => {
 		return (Math.random() - 0.5) / 64;
 	};
-
-	const provider = new GoogleAuthProvider();
 	const addUserDoc = async (user: User) => {
 		// TODO: ensure user is not already in the database
 		await setDoc(doc(firestore, 'users', user.uid), {
@@ -21,10 +21,10 @@
 			email: user.email,
 			name: user.displayName,
 			photoURL: user.photoURL,
-			location: new GeoPoint(userLocation.lat + randomLoc(), userLocation.lng + randomLoc())
+			location: new GeoPoint(userLocation.lat + randomLoc(), userLocation.lng + randomLoc()),
+			accountType: 'client'
 		});
 	};
-
 	const handleKeyDown = (event: KeyboardEvent) => {
 		if (event.key === 'Escape') isOpen = false;
 	};
