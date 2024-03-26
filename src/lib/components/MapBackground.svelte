@@ -38,7 +38,7 @@
 <div bind:this={mapContainer} class="map-container" style="background-color: var(--bg-color)">
 	<div class="img-container">
 		Map is Loading... &nbsp;
-		<img src="loading.gif" />
+		<img src="loading.gif" alt="the map is loading right now" />
 	</div>
 </div>
 

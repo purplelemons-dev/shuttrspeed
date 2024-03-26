@@ -55,6 +55,8 @@
 	:root {
 		--bg-color: white;
 		--text-color: black;
+
+		font-family: 'Nunito', sans-serif;
 	}
 
 	:global(.dark-mode) {

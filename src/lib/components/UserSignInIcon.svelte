@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { SignedIn, SignedOut } from 'sveltefire';
 	import SignInPopup from './SignInPopup.svelte';
+	import AccountPopup from './AccountPopup.svelte';
 	import type { UserLocation } from '$lib';
 	import { auth } from '$lib/firebase';
 	import { onMount } from 'svelte';
@@ -9,6 +10,7 @@
 
 	let isPopupOpen = false;
 	let isDropdownOpen = false;
+	let accountSettingsOpen = false;
 	export let isDarkMode: boolean;
 
 	const toggleDropdown = () => {
@@ -37,6 +39,10 @@
 		localStorage.setItem('isDarkMode', String(isDarkMode));
 		await signOut(auth);
 	};
+
+	const accountSettings = async () => {
+		accountSettingsOpen = !accountSettingsOpen;
+	};
 </script>
 
 <div
@@ -46,16 +52,18 @@
 	role="button"
 	tabindex="0"
 >
-	<SignedIn let:user><img src={user.photoURL} alt="Profile Icon" /></SignedIn>
+	<SignedIn let:user
+		><img src={user.photoURL} alt="Profile Icon" crossorigin="use-credentials" /></SignedIn
+	>
 	<SignedOut><img src="profile-icon.png" alt="Profile Icon" /></SignedOut>
 
 	{#if isDropdownOpen}
 		<div class="dropdown">
 			<SignedIn>
 				<button on:click={customSignOut}>Sign Out</button>
-				<button>Account Settings</button>
+				<button on:click={accountSettings}>Account Settings</button>
 				<button on:click={toggleDarkMode}>Light/Dark Switch</button>
-				<button>Preferences</button>
+				<!--<button>Preferences</button>-->
 			</SignedIn>
 			<SignedOut>
 				<button on:click={togglePopup}>Sign In or Register</button>
@@ -67,6 +75,10 @@
 {#if isPopupOpen}
 	<SignInPopup bind:isOpen={isPopupOpen} bind:userLocation />
 {/if}
+
+<SignedIn>
+	<AccountPopup bind:accountSettingsOpen />
+</SignedIn>
 
 <style>
 	.profile-icon {
