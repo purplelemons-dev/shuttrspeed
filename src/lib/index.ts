@@ -24,6 +24,7 @@ export interface User {
     photoURL: string;
     location: GeoPoint;
     accountType: AccountType;
+    featImgURLs: string[];
 }
 
 export interface UserLocation {

@@ -4,6 +4,7 @@
 	import { firestore, auth } from '$lib/firebase';
 	import { SignedIn, collectionStore, userStore } from 'sveltefire';
 	import type { UserLocation } from '$lib';
+	import FeaturedImages from './FeaturedImages.svelte';
 
 	export let userLocation: UserLocation;
 	$: lat = userLocation?.lat;
@@ -28,16 +29,27 @@
 			{#if conditions(userItem)}
 				<li>
 					<div class="userItem">
-						<div class="profile-icon-container">
-							<img src={userItem.photoURL} alt={userItem.name} class="profile-icon" />
+						<div class="user-info">
+							<div class="profile-icon-container">
+								<img
+									src="/api/profile/{btoa(userItem.photoURL)}"
+									alt={userItem.name}
+									class="profile-icon"
+								/>
+							</div>
+							<div class="user-details">
+								<h2>{userItem.name}</h2>
+								{distanceCalc(
+									lat,
+									lng,
+									userItem.location.latitude,
+									userItem.location.longitude
+								).toFixed(1)} miles from you.
+							</div>
 						</div>
-						<h2>{userItem.name}</h2>
-						{distanceCalc(
-							lat,
-							lng,
-							userItem.location.latitude,
-							userItem.location.longitude
-						).toFixed(1)} miles from you.
+						<div class="feat-imgs">
+							<FeaturedImages {userItem} />
+						</div>
 					</div>
 				</li>
 			{/if}
@@ -58,7 +70,23 @@
 
 	.userItem {
 		display: flex;
+		flex-direction: column;
 		justify-content: space-between;
+	}
+
+	.user-info {
+		display: flex;
+		align-items: center;
+		margin-bottom: 1rem;
+	}
+
+	.user-details {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.feat-imgs {
+		display: flex;
 	}
 
 	h2 {
