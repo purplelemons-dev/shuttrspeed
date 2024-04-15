@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { SignedIn } from 'sveltefire';
+	import { getSettings } from '$lib/utils/settings';
+	import type { User } from '$lib';
 
+	//const settings = getSettings();
 	export let accountSettingsOpen: boolean;
 </script>
 
@@ -13,7 +16,6 @@
 		>
 			<div class="popup">
 				<h2>Account Settings</h2>
-                
 			</div>
 		</button>
 	</SignedIn>

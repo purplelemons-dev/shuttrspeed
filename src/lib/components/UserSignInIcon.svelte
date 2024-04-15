@@ -13,14 +13,14 @@
 	let accountSettingsOpen = false;
 	export let isDarkMode: boolean;
 
-	const toggleDropdown = () => {
+	const toggleDropdown = async () => {
 		isDropdownOpen = !isDropdownOpen;
 	};
-	const togglePopup = () => {
+	const togglePopup = async () => {
 		isPopupOpen = !isPopupOpen;
 	};
 
-	onMount(() => {
+	onMount(async () => {
 		isDarkMode = localStorage.getItem('isDarkMode') === 'true';
 		if (isDarkMode) document.documentElement.classList.add('dark-mode');
 		else document.documentElement.classList.remove('dark-mode');
@@ -52,8 +52,8 @@
 	role="button"
 	tabindex="0"
 >
-	<SignedIn let:user
-		><img src={user.photoURL} alt="Profile Icon" crossorigin="use-credentials" /></SignedIn
+	<SignedIn let:user>
+		<img src="/api/profile/{btoa(user.photoURL || '')}" alt="Profile Icon" /></SignedIn
 	>
 	<SignedOut><img src="profile-icon.png" alt="Profile Icon" /></SignedOut>
 

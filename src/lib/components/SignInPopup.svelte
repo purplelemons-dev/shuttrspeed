@@ -15,7 +15,6 @@
 		return (Math.random() - 0.5) / 64;
 	};
 	const addUserDoc = async (user: User) => {
-		// TODO: ensure user is not already in the database
 		await setDoc(doc(firestore, 'users', user.uid), {
 			uid: user.uid,
 			email: user.email,
@@ -46,6 +45,7 @@
 							class="google-btn"
 							on:click={async () => {
 								let user = await signInWithPopup(auth, provider);
+								console.log("user", user)
 								isOpen = false;
 								getDoc(doc(firestore, 'users', user.user.uid)).then(async (doc) => {
 									if (doc.exists()) return;
