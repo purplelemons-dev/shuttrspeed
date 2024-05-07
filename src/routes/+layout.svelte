@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { FirebaseApp } from 'sveltefire';
-	import { auth, firestore } from '$lib/firebase';
+	import { auth, firestore, storage } from '$lib/firebase';
 </script>
 
 <head>
@@ -12,6 +12,6 @@
 	/></head
 >
 
-<FirebaseApp {auth} {firestore}>
+<FirebaseApp {auth} {firestore} {storage}>
 	<slot />
 </FirebaseApp>
